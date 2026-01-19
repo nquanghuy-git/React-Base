@@ -1,49 +1,24 @@
-import "./components/todo/todo.css";
-import Header from "./components/layout/header";
-import Footer from "./components/layout/footer";
-import { Outlet } from "react-router-dom";
-import { getAccountAPI } from "./services/api.service";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "./components/context/auth.context";
-import { Spin } from "antd";
+import './component/todo/todo.css';
+import TodoData from './component/todo/TodoData';
+import TodoNew from './component/todo/TodoNew';
+import reactLogo from './assets/react.svg';
 
-const App = () => {
-  const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const fetchUserInfo = async () => {
-    const res = await getAccountAPI();
-    if (res.data) {
-      // success
-      setUser(res.data.user);
-    }
-    setIsAppLoading(false);
-  };
-
+const name = 'HuyBro';
+const age = 20;
+const App = (props) => {
+  console.log('App component rendered', props);
   return (
-    <>
-      {isAppLoading ? (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Spin />
-        </div>
-      ) : (
-        <>
-          <Header />
-          <Outlet />
-          <Footer />
-        </>
-      )}
-    </>
+    <div className="todo-container">
+      <div className="todo-title">Todo list</div>
+      <TodoNew />
+      <TodoData
+        name={name}
+        age={age}
+      />
+      <div className="todo-image">
+        <img src={reactLogo} alt="" />
+      </div>
+    </div>
   );
 };
 
